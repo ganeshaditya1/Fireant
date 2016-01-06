@@ -38,8 +38,13 @@ public class Bufferpool {
 
     private page head, tail;
 
-    public Bufferpool(int noPages){}
+    public Bufferpool(int noPages){
+        this.maxSize = noPages;
+        head = tail = null;
+    }
 
     //This implements the Least recently used buffer replacement policy.
-    public byte[] getResource(String fileName){return null;}
+    public byte[] getResource(String fileName){
+        return null;
+    }
 }
