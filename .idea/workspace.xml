@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a05e01c9-d5ba-493a-a13f-424fe4c0b7eb" name="Default" comment="">
+    <list default="true" id="a05e01c9-d5ba-493a-a13f-424fe4c0b7eb" name="Default" comment="Changed the access specifiers of the variables in page class">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ConnectionPool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Bufferpool.java" afterPath="$PROJECT_DIR$/src/main/java/Bufferpool.java" />
     </list>
     <ignored path="FireAnt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,10 +36,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bufferpool.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Bufferpool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Bufferpool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13651316">
+            <state vertical-scroll-proportion="0.0">
               <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
               <folding>
                 <element signature="e#318#319#0" expanded="true" />
@@ -52,6 +52,21 @@
                 <element signature="e#563#564#0" expanded="true" />
                 <element signature="e#613#614#0" expanded="true" />
                 <element signature="e#669#670#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectionPool.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ConnectionPool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5674342">
+              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#322#335#0" expanded="true" />
+                <element signature="e#620#621#0" expanded="true" />
+                <element signature="e#647#648#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,6 +94,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Bufferpool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ConnectionPool.java" />
       </list>
     </option>
   </component>
@@ -475,7 +491,13 @@
       <option name="project" value="LOCAL" />
       <updated>1452040757911</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Changed the access specifiers of the variables in page class">
+      <created>1452040861754</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1452040861754</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -512,7 +534,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Bufferpool structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bufferpool structure" />
+    <MESSAGE value="Changed the access specifiers of the variables in page class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed the access specifiers of the variables in page class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -529,7 +552,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Bufferpool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13651316">
+        <state vertical-scroll-proportion="0.0">
           <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
           <folding>
             <element signature="e#318#319#0" expanded="true" />
@@ -542,6 +565,19 @@
             <element signature="e#563#564#0" expanded="true" />
             <element signature="e#613#614#0" expanded="true" />
             <element signature="e#669#670#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ConnectionPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5674342">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#322#335#0" expanded="true" />
+            <element signature="e#620#621#0" expanded="true" />
+            <element signature="e#647#648#0" expanded="true" />
           </folding>
         </state>
       </provider>
