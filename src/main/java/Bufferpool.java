@@ -10,6 +10,7 @@ public class Bufferpool {
         private byte[] data;
         private long dateModified;
         private page next;
+        private String location;
 
         byte[] getData() {
             return data;
