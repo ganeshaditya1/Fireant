@@ -7,9 +7,9 @@
 public class Bufferpool {
     private int maxSize, currentSize;
     private class page{
-        byte[] data;
-        long dateModified;
-        page next;
+        private byte[] data;
+        private long dateModified;
+        private page next;
 
         byte[] getData() {
             return data;
