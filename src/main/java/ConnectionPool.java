@@ -20,8 +20,12 @@ public class ConnectionPool {
         this.portNo = portNo;
     }
 
+    //If there are any open connections in the pool, this will return them else it will create new ones.
     public MongoClient getConnection(){
         return null;
     }
+
+    // returns the connection object back to the pool after you are done using it.
+    public void addBackToPool(MongoClient cl){}
 
 }
