@@ -4,8 +4,6 @@
     <list default="true" id="a05e01c9-d5ba-493a-a13f-424fe4c0b7eb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Bufferpool.java" afterPath="$PROJECT_DIR$/src/main/java/Bufferpool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/FileFetcher.java" afterPath="$PROJECT_DIR$/src/main/java/FileFetcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/main.java" afterPath="$PROJECT_DIR$/src/main/java/main.java" />
     </list>
     <ignored path="FireAnt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +39,8 @@
       <file leaf-file-name="Bufferpool.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Bufferpool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34005037">
-              <caret line="105" column="36" selection-start-line="105" selection-start-column="36" selection-end-line="105" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.037783377">
+              <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,8 +93,8 @@
       <file leaf-file-name="main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.5882354">
-              <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
+            <state vertical-scroll-proportion="-0.44117647">
+              <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -585,7 +583,13 @@
       <option name="project" value="LOCAL" />
       <updated>1452103071329</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Completely implemented Bufferpool and it's page replacement algorithm.">
+      <created>1452135557660</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1452135557660</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -629,7 +633,8 @@
     <MESSAGE value="Modified the structure of page class in Bufferpool so that it now holds the name of the file as well." />
     <MESSAGE value="Part of main class implemented and part of the Bufferpool and Filefetcher class also implemented." />
     <MESSAGE value="Main class completely implemented and part of the Bufferpool and Filefetcher class also implemented." />
-    <option name="LAST_COMMIT_MESSAGE" value="Main class completely implemented and part of the Bufferpool and Filefetcher class also implemented." />
+    <MESSAGE value="Completely implemented Bufferpool and it's page replacement algorithm." />
+    <option name="LAST_COMMIT_MESSAGE" value="Completely implemented Bufferpool and it's page replacement algorithm." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -748,8 +753,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.5882354">
-          <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
+        <state vertical-scroll-proportion="-0.44117647">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -758,8 +763,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Bufferpool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34005037">
-          <caret line="105" column="36" selection-start-line="105" selection-start-column="36" selection-end-line="105" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.037783377">
+          <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

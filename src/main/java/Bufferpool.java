@@ -77,63 +77,65 @@ public class Bufferpool {
         fileName = baseURI + fileName;
 
         page poolPage = head, poolPageParent = head;
-        //This is executed if the pool is not empty.
-        if(poolPage != null) {
-            // Search in the pool to see if we can find the file we are looking for.
-            for (; poolPage != null; poolPageParent = poolPage, poolPage = poolPage.getNext()) {
-                if(poolPage.getLocation().equals(fileName)){
-                    break;
-                }
-            }
-            //Page was found in the pool itself.
-            if(poolPage != null){
-
-                File temp = new File(fileName);
-                if(temp.lastModified() > poolPage.getDateModified()){
-                    System.out.println("AWESOME!!");
-                    poolPage.loadNewFile(fileName);
-                }
-                if(poolPageParent != poolPage){
-                    poolPageParent.setNext(poolPage.getNext());
-                    poolPage.setNext(head);
-                    head = poolPage;
-                }
-                return poolPage.getData();
-            }
-            //Page was not found in the pool.
-            else{
-                // check if pool is full.
-                if(currentSize + 1 < maxSize){
-                    //pool is not full.
-                    //Create a new page and move it to the front of linked list.
-                    page temp = new page(fileName);
-                    temp.setNext(head);
-                    head = temp;
-                    currentSize++;
-                    return head.getData();
-                }
-                //pool is full
-                else{
-                    tail.loadNewFile(fileName);
-                    //Find the parent of tail and set it's next to null and move tail to the front of the linked list
-                    page parentTail = head;
-                    for(; parentTail !=null; parentTail = parentTail.getNext()){
-                        if(parentTail.getNext() == tail){
-                            break;
-                        }
+        synchronized (this){
+            //This is executed if the pool is not empty.
+            if(poolPage != null) {
+                // Search in the pool to see if we can find the file we are looking for.
+                for (; poolPage != null; poolPageParent = poolPage, poolPage = poolPage.getNext()) {
+                    if(poolPage.getLocation().equals(fileName)){
+                        break;
                     }
-                    parentTail.setNext(null);
-                    tail.setNext(head);
-                    head = tail;
+                }
+                //Page was found in the pool itself.
+                if(poolPage != null){
+
+                    File temp = new File(fileName);
+                    if(temp.lastModified() > poolPage.getDateModified()){
+                        System.out.println("AWESOME!!");
+                        poolPage.loadNewFile(fileName);
+                    }
+                    if(poolPageParent != poolPage){
+                        poolPageParent.setNext(poolPage.getNext());
+                        poolPage.setNext(head);
+                        head = poolPage;
+                    }
+                    return poolPage.getData();
+                }
+                //Page was not found in the pool.
+                else{
+                    // check if pool is full.
+                    if(currentSize + 1 < maxSize){
+                        //pool is not full.
+                        //Create a new page and move it to the front of linked list.
+                        page temp = new page(fileName);
+                        temp.setNext(head);
+                        head = temp;
+                        currentSize++;
+                        return head.getData();
+                    }
+                    //pool is full
+                    else{
+                        tail.loadNewFile(fileName);
+                        //Find the parent of tail and set it's next to null and move tail to the front of the linked list
+                        page parentTail = head;
+                        for(; parentTail !=null; parentTail = parentTail.getNext()){
+                            if(parentTail.getNext() == tail){
+                                break;
+                            }
+                        }
+                        parentTail.setNext(null);
+                        tail.setNext(head);
+                        head = tail;
+                    }
                 }
             }
-        }
-        //Pool is empty.
-        else{
+            //Pool is empty.
+            else{
 
-            head = new page(fileName);
-            tail = head;
-            return head.getData();
+                head = new page(fileName);
+                tail = head;
+                return head.getData();
+            }
         }
         return null;
     }
