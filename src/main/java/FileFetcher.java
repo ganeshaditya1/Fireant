@@ -31,8 +31,8 @@ public class FileFetcher extends Thread {
                 res.addContentType(requestedResource);
                 res.addHeaderEntry("Content-Length", file.length + "");
                 out.write(res.getResponse());
-                client.getOutputStream().write(file);
                 out.flush();
+                client.getOutputStream().write(file);
                 out.close();
             }
             catch(IOException ioe){}
