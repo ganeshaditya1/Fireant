@@ -1,5 +1,6 @@
 import com.mongodb.MongoClient;
 
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -18,7 +19,13 @@ public class FileFetcher extends Thread {
         this.pool = pool;
     }
 
-    public void run(){
-        byte[] file = pool.getResource(requestedResource);
+    public void run() {
+        try {
+            byte[] file = pool.getResource(requestedResource);
+        }
+        catch(IOException IOE){
+            System.out.println("[Error]" + IOE.getMessage());
+            return;
+        }
     }
 }

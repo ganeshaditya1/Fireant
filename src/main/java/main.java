@@ -47,7 +47,7 @@ public class main {
 
 
     public main(String arguments[]) throws IOException{
-        if(arguments.length == 0 || arguments[0].equals("--help")){
+        if(arguments[0].equals("--help")){
             printHelpMenu();
             return;
         }
@@ -63,27 +63,34 @@ public class main {
             }
         }
         if(options.get("portno") == null || !isNumber(options.get("portno"))){
+            sopn("[Warning]Either portno was not specified or was not a number, so using port no 80");
             options.put("portno", "80");
         }
 
         if(options.get("root") == null){
+            sopn("[Warning]root was not specified");
             options.put("root", "/home/aditya");
         }
 
         if(options.get("maxcachesize") == null || !isNumber(options.get("maxcachesize"))){
+            sopn("[Warning]Either maxcachesize was not specified or was not a number. Using max cache size of 25");
             options.put("maxcachesize", "25");
         }
 
         if(options.get("mongoip") == null){
+            sopn("[Warning] Ip address of mongo server was not specified so using localhost as server address");
             options.put("mongoip", "localhost");
         }
 
         if(options.get("mongoportno") == null || !isNumber(options.get("mongoportno"))){
+            sopn("[Warning] Port no of mongo server was not specified so using 27017");
             options.put("mongoportno", "27017");
         }
 
-        Bufferpool pool = new Bufferpool(Integer.parseInt(options.get("maxcachesize")));
-        MongoClient mongoConn = new MongoClient(options.get("mongoip"), Integer.parseInt(options.get("mongoportno")));
+
+
+        Bufferpool pool = new Bufferpool(Integer.parseInt(options.get("maxcachesize")), options.get("root"));
+      //  MongoClient mongoConn = new MongoClient(options.get("mongoip"), Integer.parseInt(options.get("mongoportno")));
 
         ServerSocket s = new ServerSocket(Integer.parseInt(options.get("portno")));
         while(true){
@@ -92,11 +99,14 @@ public class main {
                     new InputStreamReader(client.getInputStream()));
 
             String input = in.readLine();
+            sopn(input);
             String keywords[] = input.split(" ");
             if(!keywords[0].equals("OPTIONS")){
-                (new FileFetcher(client, keywords[1], mongoConn, pool)).run();
+                (new FileFetcher(client, keywords[1], null, pool)).run();
             }
-
+            in.close();
+            client.close();
+            pool.printFileNames();
         }
 
     }
