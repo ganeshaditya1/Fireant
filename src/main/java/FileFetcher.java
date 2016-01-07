@@ -1,6 +1,7 @@
 import com.mongodb.MongoClient;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -22,9 +23,36 @@ public class FileFetcher extends Thread {
     public void run() {
         try {
             byte[] file = pool.getResource(requestedResource);
+            try {
+                PrintWriter out =
+                        new PrintWriter(client.getOutputStream(), true);
+
+                Response res = new Response(200);
+                res.addContentType(requestedResource);
+                res.addHeaderEntry("Content-Length", file.length + "");
+                out.write(res.getResponse());
+                client.getOutputStream().write(file);
+                out.flush();
+                out.close();
+            }
+            catch(IOException ioe){}
         }
         catch(IOException IOE){
             System.out.println("[Error]" + IOE.getMessage());
+            try {
+                PrintWriter out =
+                        new PrintWriter(client.getOutputStream(), true);
+
+                Response res = new Response(404);
+                res.addHeaderEntry("Content-Type", "text/html");
+                String message = "<h1> Sorry we couldn't find what you were looking for</h1><hr>\r\n";
+                res.addHeaderEntry("Content-Length", message.length() + "");
+                out.write(res.getResponse());
+                out.write(message);
+                out.flush();
+                out.close();
+            }
+            catch(IOException ioe){}
             return;
         }
     }

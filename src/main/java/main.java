@@ -47,7 +47,7 @@ public class main {
 
 
     public main(String arguments[]) throws IOException{
-        if(arguments[0].equals("--help")){
+        if(arguments.length != 0 && arguments[0].equals("--help")){
             printHelpMenu();
             return;
         }
@@ -106,7 +106,6 @@ public class main {
             }
             in.close();
             client.close();
-            pool.printFileNames();
         }
 
     }
