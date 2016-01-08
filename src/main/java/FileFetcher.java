@@ -3,6 +3,7 @@ import com.mongodb.MongoClient;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Map;
 
 /**
  * Created by aditya on 1/5/16.
@@ -12,12 +13,14 @@ public class FileFetcher extends Thread {
     private String requestedResource;
     private MongoClient conn;
     private Bufferpool pool;
+    private Map headerFields;
 
-    public FileFetcher(Socket client, String requestedResource, MongoClient conn, Bufferpool pool){
+    public FileFetcher(Socket client, String requestedResource, MongoClient conn, Bufferpool pool, Map headerFields){
         this.client = client;
         this.requestedResource = requestedResource;
         this.conn = conn;
         this.pool = pool;
+        this.headerFields = headerFields;
     }
 
     public void run() {
