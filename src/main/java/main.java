@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.Buffer;
@@ -96,61 +97,22 @@ public class main {
         ServerSocket s = new ServerSocket(Integer.parseInt(options.get("portno")));
         while(true){
             Socket client = s.accept();
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(client.getInputStream()));
+            Request req = new Request(client);
+            if(req.getMethod().equals("GET")){
+                (new FileFetcher(client, req, pool)).run();
+            }
+            else if(req.getMethod().equals("POST")){
+                try {
+                    (new MongoHandler(client, req, mongoConn)).run();
+                }
+                catch(Exception e){
+                    Response res = new Response(400, "{\"Error\": \""+e.getMessage()+"\"}");
+                    sopn("[Error]" + e.getMessage());
+                    res.writeData(client);
+                    client.close();
+                }
+            }
 
-            String statusLine = in.readLine();
-            Map<String, String> headerFields = new HashMap<String, String>();
-            String line = "", content = "";
-            byte state = 0;
-            char alphabet;
-            while(true){
-                alphabet = (char)in.read();
-                if(state == 0){
-                    if(alphabet == '\r') {
-                        state = 1;
-                    }
-                    else{
-                        line += alphabet;
-                    }
-                }
-                else if(state == 1){
-                    if(alphabet == '\n'){
-                        state = 2;
-                        String arr[] = line.split(":");
-                        headerFields.put(arr[0], arr[1]);
-                        line = "";
-                    }
-                    else{
-                        line += alphabet;
-                    }
-                }
-                else if(state == 2){
-                    if(alphabet == '\r'){
-                        in.read();
-                        break;
-                    }
-                    else{
-                        line += alphabet;
-                        state = 0;
-                    }
-                }
-            }
-            if(headerFields.get("Content-Length") != null) {
-                int messageLength = Integer.parseInt(headerFields.get("Content-Length").trim());
-                for (int i = 0; i < messageLength; i++) {
-                    content += (char) in.read();
-                }
-            }
-            String keywords[] = statusLine.split(" ");
-            if(keywords[0].equals("GET")){
-                (new FileFetcher(client, keywords[1], mongoConn, pool, headerFields)).run();
-            }
-            else if(keywords[0].equals("POST")){
-
-            }
-            in.close();
-            client.close();
         }
 
     }

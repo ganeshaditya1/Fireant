@@ -11,16 +11,12 @@ import java.util.Map;
 public class FileFetcher extends Thread {
     private Socket client;
     private String requestedResource;
-    private MongoClient conn;
     private Bufferpool pool;
-    private Map headerFields;
 
-    public FileFetcher(Socket client, String requestedResource, MongoClient conn, Bufferpool pool, Map headerFields){
+    public FileFetcher(Socket client, Request req, Bufferpool pool){
         this.client = client;
-        this.requestedResource = requestedResource;
-        this.conn = conn;
+        this.requestedResource = req.getRequestURL();
         this.pool = pool;
-        this.headerFields = headerFields;
     }
 
     public void run() {
@@ -30,15 +26,13 @@ public class FileFetcher extends Thread {
                 PrintWriter out =
                         new PrintWriter(client.getOutputStream(), true);
 
-                Response res = new Response(200);
-                res.addContentType(requestedResource);
-                res.addHeaderEntry("Content-Length", file.length + "");
-                out.write(res.getResponse());
-                out.flush();
-                client.getOutputStream().write(file);
-                out.close();
+                Response res = new Response(200, file, requestedResource);
+                res.writeData(client);
+                client.close();
             }
-            catch(IOException ioe){}
+            catch(IOException ioe){
+                System.out.println("[ERROR] "+ioe.getMessage());
+            }
         }
         catch(IOException IOE){
             System.out.println("[Error]" + IOE.getMessage());
@@ -46,16 +40,12 @@ public class FileFetcher extends Thread {
                 PrintWriter out =
                         new PrintWriter(client.getOutputStream(), true);
 
-                Response res = new Response(404);
-                res.addHeaderEntry("Content-Type", "text/html");
-                String message = "<h1> Sorry we couldn't find what you were looking for</h1><hr>\r\n";
-                res.addHeaderEntry("Content-Length", message.length() + "");
-                out.write(res.getResponse());
-                out.write(message);
-                out.flush();
-                out.close();
+                Response res = new Response(404, "<h1> Sorry we couldn't find what you were looking for</h1><hr>\r\n");
+                res.writeData(client);
+                client.close();
             }
             catch(IOException ioe){}
+
             return;
         }
     }

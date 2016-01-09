@@ -3,9 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/FireAnt_jar</output-path>
     <root id="archive" name="FireAnt.jar">
       <element id="module-output" name="FireAnt" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/bson/3.2.0/bson-3.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-core/3.2.0/mongodb-driver-core-3.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.2.0/mongodb-driver-3.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/bson/3.2.0/bson-3.2.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

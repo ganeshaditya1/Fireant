@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +11,91 @@ import java.util.Map;
  */
 public class Response {
 
-    private String result;
+    private String headers;
     private Map<String, String> mimes = new HashMap<String, String>();
+    private Boolean isFile;
+    private byte[] file;
+    private String url;
+    private String message;
+
+    private void addContentType(String fileName){
+        int index = fileName.lastIndexOf('.');
+        String extension = fileName.substring(index);
+        addHeaderEntry("Content-Type: ", mimes.get(extension));
+    }
+
+    private void addHeaderEntry(String key, String value){
+        headers += key + ": "  + value + " \r\n";
+    }
+
+    public Response(int status, byte[] file, String url){
+        headers = "HTTP/1.1";
+        if(status == 200){
+            headers += " 200 OK";
+        }
+        else if(status == 404){
+            headers += " 404 Not Found";
+        }
+        else if(status == 400){
+            headers += " 400 Bad Request";
+        }
+        headers += "\r\n";
+        addMimes();
+        isFile = true;
+        this.file = file;
+        this.url = url;
+        addContentType(url);
+        addHeaderEntry("Content-Length", file.length + "");
+        String temp = url.replace('\\', '/');
+        String filename = temp.substring(temp.lastIndexOf("/"));
+        //addHeaderEntry("Content-Disposition", "attachment; filename=" + filename);
+    }
+
+    public Response(int status, String message){
+        headers = "HTTP/1.1";
+        if(status == 200){
+            headers += " 200 OK";
+        }
+        else if(status == 404){
+            headers += " 404 Not Found";
+        }
+        else if(status == 400){
+            headers += " 400 Bad Request";
+        }
+        headers += "\r\n";
+        addMimes();
+        isFile = false;
+        this.message = message;
+        if(message.indexOf('{') == -1)
+        {
+            addHeaderEntry("Content-Type", "text/html");
+        }
+        else {
+            addHeaderEntry("Content-Type", "application/json");
+        }
+        addHeaderEntry("Content-length", message.length() + "");
+    }
+
+
+
+    public void writeData(Socket client) throws IOException {
+        headers += "\r\n";
+        if(isFile){
+            PrintWriter out =
+                    new PrintWriter(client.getOutputStream(), true);
+            out.write(headers);
+            out.flush();
+            client.getOutputStream().write(file);
+            out.close();
+        }
+        else{
+            PrintWriter out =
+                    new PrintWriter(client.getOutputStream(), true);
+            out.write(headers + message);
+            out.flush();
+            out.close();
+        }
+    }
 
     private void addMimes(){
         mimes.put(".3dm", "x-world/x-3dmf");
@@ -659,34 +745,5 @@ public class Response {
         mimes.put(".zoo", "application/octet-stream");
         mimes.put(".zsh", "text/x-script.zsh");
 
-    }
-
-    public Response(int status){
-        result = "HTTP/1.1";
-        if(status == 200){
-            result += " 200 OK";
-        }
-        else if(status == 404){
-            result += " 404 Not Found";
-        }
-        else if(status == 400){
-            result += " 400 Bad Request";
-        }
-        result += "\r\n";
-        addMimes();
-    }
-
-    public void addContentType(String fileName){
-        int index = fileName.lastIndexOf('.');
-        String extension = fileName.substring(index);
-        addHeaderEntry("Content-Type: ", mimes.get(extension));
-    }
-
-    public void addHeaderEntry(String key, String value){
-        result += key + ": "  + value + " \r\n";
-    }
-
-    public String getResponse(){
-        return result + "\r\n";
     }
 }
