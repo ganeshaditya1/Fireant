@@ -1,10 +1,15 @@
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
+import com.mongodb.util.ObjectSerializer;
 import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import org.bson.Document;
+import org.jongo.Find;
+import org.jongo.Jongo;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -25,7 +30,7 @@ public class MongoHandler extends Thread {
     public MongoHandler(Socket client, Request req, MongoClient mongoconn) throws Exception {
         Object obj = JSONValue.parse(req.getContent());
         JSONObject jobj = (JSONObject)obj;
-        System.out.println(JSONValue.parse(req.getContent()) + " a " + req.getContent());
+        System.out.println(req.getContent());
         if((database = (String)jobj.get("database")) == null) {
             throw new Exception("Database not specified");
         }
@@ -70,6 +75,71 @@ public class MongoHandler extends Thread {
         mcollection.updateMany(Document.parse(selectionField.toString()), Document.parse(replacement.toString()));
     }
 
+    private void selectOne(){
+
+        Jongo jongo = new Jongo(dbconn.getDB(database));
+        org.jongo.MongoCollection mc = jongo.getCollection(collection);
+        JSONObject findField = (JSONObject)data.get("findField");
+        JSONObject sortField = (JSONObject)data.get("sortField");
+        JSONObject projectionField = (JSONObject)data.get("projectionField");
+
+        Find result = null;
+        if(findField != null){
+            result = mc.find(findField.toJSONString());
+        }
+        if(sortField != null){
+            result = result.sort(sortField.toString());
+        }
+        if(projectionField != null){
+            result = result.projection(projectionField.toString());
+        }
+        String resultJson = "";
+        org.jongo.MongoCursor cursor = result.as(Object.class);
+        if(cursor.hasNext()){
+            resultJson += cursor.next();
+        }
+        System.out.println(resultJson);
+        Response res= new Response(200, resultJson);
+        try {
+            res.writeData(client);
+        }
+        catch(IOException ioe){
+            System.out.println("[Error]" + ioe.getMessage());
+        }
+    }
+
+    private void selectMany(){
+        Jongo jongo = new Jongo(dbconn.getDB(database));
+        org.jongo.MongoCollection mc = jongo.getCollection(collection);
+        JSONObject findField = (JSONObject)data.get("findField");
+        JSONObject sortField = (JSONObject)data.get("sortField");
+        JSONObject projectionField = (JSONObject)data.get("projectionField");
+
+        Find result = null;
+        if(findField != null){
+            result = mc.find(findField.toJSONString());
+        }
+        if(sortField != null){
+            result = result.sort(sortField.toString());
+        }
+        if(projectionField != null){
+            result = result.projection(projectionField.toString());
+        }
+        String resultJson = "";
+        org.jongo.MongoCursor cursor = result.as(Object.class);
+        while(cursor.hasNext()){
+            resultJson += cursor.next();
+        }
+        System.out.println(resultJson);
+        Response res= new Response(200, resultJson);
+        try {
+            res.writeData(client);
+        }
+        catch(IOException ioe){
+            System.out.println("[Error]" + ioe.getMessage());
+        }
+    }
+
     public void run(){
         if(operation.equals("insert")){
             insert();
@@ -85,6 +155,12 @@ public class MongoHandler extends Thread {
         }
         else if(operation.equals("update many")){
             updateMany();
+        }
+        else if(operation.equals("select one")){
+            selectOne();
+        }
+        else if(operation.equals("select many")){
+            selectMany();
         }
         try {
             client.close();

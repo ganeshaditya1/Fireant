@@ -66,7 +66,6 @@ public class Request {
                 content += (char) in.read();
             }
         }
-        in.close();
     }
 
     public Map getHeaderFields(){

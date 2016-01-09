@@ -49,6 +49,7 @@ public class Response {
         String temp = url.replace('\\', '/');
         String filename = temp.substring(temp.lastIndexOf("/"));
         //addHeaderEntry("Content-Disposition", "attachment; filename=" + filename);
+        addHeaderEntry("Access-Control-Allow-Origin", "*");
     }
 
     public Response(int status, String message){
@@ -71,9 +72,10 @@ public class Response {
             addHeaderEntry("Content-Type", "text/html");
         }
         else {
-            addHeaderEntry("Content-Type", "application/json");
+            addHeaderEntry("Content-Type", "text");
         }
         addHeaderEntry("Content-length", message.length() + "");
+        addHeaderEntry("Access-Control-Allow-Origin", "*");
     }
 
 
@@ -94,6 +96,7 @@ public class Response {
             out.write(headers + message);
             out.flush();
             out.close();
+            System.out.println(headers + message);
         }
     }
 
