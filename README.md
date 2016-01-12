@@ -21,6 +21,8 @@ Various options when invoking this are:
 --root The location from where I need to serve the requested files from. Default is "/".
 --maxcachesize The maximum number of files that should be cached. Default is 25.
 ```
+###Using the server.
+
 To access MongoDB through my webserver send a POST request with the following information.
 
 "database" name of the database
