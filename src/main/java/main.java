@@ -99,7 +99,7 @@ public class main {
 
         if(options.get("root") == null){
             sopn("[Warning]root was not specified");
-            options.put("root", "/home/aditya");
+            options.put("root", "/");
         }
 
         if(options.get("maxcachesize") == null || !isNumber(options.get("maxcachesize"))){
