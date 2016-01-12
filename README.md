@@ -3,13 +3,22 @@ Http server for MongoDB
 
 This is a fully fledged Http server that serve files to users. It accepts queries in the form of a JSON object and runs them on a Mongo db and returns the results in JSON format.
 
+###Running the code.
+
+To run the project you will need Java runtime environment installed and also potentially admin rights on the pc you are executing this on.
+
+Download and extract the zip and run it using Java command as follows
+`sudo java -jar FireAnt.jar`
+
+The following are various options that you could use in conjunction to the above command.
+
 Various options when invoking this are:
 
---portno  The port number where the server needs to run
---mongoip The ip address where MongoDB is running
---mongoportno The port number where the mongo is running
---root The location from where I need to serve the requested files from
---maxcachesize The maximum number of files that should be cached
+--portno  The port number where the server needs to run. Default is 80.
+--mongoip The ip address where MongoDB is running. Default is localhost.
+--mongoportno The port number where the mongo is running. Default is 27017.
+--root The location from where I need to serve the requested files from. Default is "/".
+--maxcachesize The maximum number of files that should be cached. Default is 25.
 
 To access MongoDB through my webserver send a POST request with the following information.
 
