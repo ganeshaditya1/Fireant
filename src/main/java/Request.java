@@ -45,7 +45,24 @@ public class Request {
     public Request(Socket client) throws IOException{
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(client.getInputStream()));
-
+        /* Each http request has a status line at the beginning.
+        which looks like methodname requestedUrl protocol used
+        then there are multiple header fields. Each delimited by a \r\n.
+        After the header fields there is a additional \r\n followed by the content of the request.
+        The problem is that the content is not delimited by \r\n. So we can't use the buffered reader's
+        readLine() method to read the content. We have to read it character by character.
+        
+        For this we need to know how many characters we need to read. For that we have the
+        Content-Length Header field. 
+        
+        Here states are used to guess how far we are in parsing the request. 
+        State 0 means we are at the beginning of some header field.
+        State 1 means we have encountered a \r and hence probably at the end of the header field.
+        State 2 means that we have encountered a new line and just before a \r.
+        so we are definately at the end of the header field. we are not sure if there are more headerfields.
+        State 3 means we have received a \r after the last \n so we are not going to receive any more headers
+        what follows next is definately content.
+        */
         String statusLine = in.readLine();
         String keywords[] = statusLine.split(" ");
         method = keywords[0];
