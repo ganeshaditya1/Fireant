@@ -24,15 +24,12 @@ Various options when invoking this are:
 ###Using the server.
 
 To access MongoDB through my webserver send a POST request with the following information.
-
-"database" name of the database
-
-"collections" name of the collection
-
+```
+"database" name of the database.
+"collections" name of the collection.
 "data" query related data.
-
 "operation" the operation you wish to perform, "select one", "select many", "update one", "update many", "delete one", "delete many", "insert"
-
+```
 For insertion it's just the document that you wish to insert.
 
 For deletion its a document of the type {"field1": value1, "field2": value2} this document is used to find all the documents that have a matching values in the fields given by user and deletes it.
